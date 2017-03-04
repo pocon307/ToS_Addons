@@ -1,0 +1,11 @@
+[
+	{
+		"name" : "Bookmark Warp",
+		"file" : "bookmarkwarp",
+		"extension" : "ipf",
+		"fileVersion" : "v1.0.0",
+		"releaseTag" : "bookmarkwarp",
+		"unicode" : "⛄",
+		"tags" : [ "warp" ]
+	}
+]
