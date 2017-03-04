@@ -6,6 +6,7 @@
 		"fileVersion" : "v1.0.0",
 		"releaseTag" : "bookmarkwarp",
 		"unicode" : "⛄",
+		"description" : "ワープ箇所のブックマークができる",
 		"tags" : [ "warp" ]
 	}
 ]
