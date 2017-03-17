@@ -10,6 +10,7 @@
 		"tags" : [ "warp" ]
 	},
 	{
+		"name" : "Useful ID UI",
 		"file" : "usefulidui",
 		"extension" : "ipf",
 		"fileVersion" : "v1.0.0",
