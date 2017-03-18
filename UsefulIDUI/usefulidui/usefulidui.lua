@@ -2,7 +2,7 @@ CHAT_SYSTEM(string.format("%s loaded", "Useful ID UI"));
 
 local UsefulIDUI = {};
 local indunFrame = nil;
-local select = 0;
+local select = 2;
 local reEnter = 0;
 local button = {};
 local event = {};
@@ -10,7 +10,7 @@ local event = {};
 function UsefulIDUI.ShowIndunenterDialog(indunType, isAlreadyPlaying, enableAutoMatch)
   UsefulIDUI.ShowIndunenterDialogHook(indunType, isAlreadyPlaying, enableAutoMatch);
   reEnter = isAlreadyPlaying;
-  if reEnter == 0 then select = 1 end
+  select = 2;
 
   local frame = ui.GetFrame("indunenter");
   indunFrame = frame;
@@ -29,6 +29,10 @@ function UsefulIDUI.ShowIndunenterDialog(indunType, isAlreadyPlaying, enableAuto
   event[3] = INDUNENTER_PARTYMATCH;
   event[4] = UsefulIDUI.IndunenterEnter;
 
+  local width = button[select]:GetWidth();
+  local x, y = GET_SCREEN_XY(button[select], width/2.5);
+  mouse.SetPos(x,y);
+  mouse.SetHidable(0);
   frame:RunUpdateScript("USEFULIDUI_UPDATE");
 end
 
@@ -65,12 +69,14 @@ function USEFULIDUI_UPDATE()
     local width = button[select]:GetWidth();
     local x, y = GET_SCREEN_XY(button[select], width/2.5);
     mouse.SetPos(x,y);
+    mouse.SetHidable(0);
   end
   if keyboard.IsKeyDown("DOWN") == 1 or joystick.GetDownJoyStickBtn() == "JOY_DOWN" then
     UsefulIDUI.AddSelect(1);
     local width = button[select]:GetWidth();
     local x, y = GET_SCREEN_XY(button[select], width/2.5);
     mouse.SetPos(x,y);
+    mouse.SetHidable(0);
   end
 
   if keyboard.IsKeyDown("SPACE") == 1 or joystick.GetDownJoyStickBtn() == "JOY_BTN_3" then

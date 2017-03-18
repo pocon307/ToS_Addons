@@ -13,7 +13,7 @@
 		"name" : "Useful ID UI",
 		"file" : "usefulidui",
 		"extension" : "ipf",
-		"fileVersion" : "v1.0.0",
+		"fileVersion" : "v1.0.1",
 		"releaseTag" : "usefulidui",
 		"unicode" : "⛄",
 		"description" : "ID入場時のUIをキーボード・ジョイパッドで操作できるようになる",
