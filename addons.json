@@ -18,5 +18,15 @@
 		"unicode" : "⛄",
 		"description" : "ID入場時のUIをキーボード・ジョイパッドで操作できるようになる",
 		"tags" : [ "UI", "ID", "joystick" ]
+	},
+	{
+		"name" : "Extended Inventory",
+		"file" : "extendedinventory",
+		"extension" : "ipf",
+		"fileVersion" : "v1.0.0",
+		"releaseTag" : "usefulidui",
+		"unicode" : "⛄",
+		"description" : "インベントリのタブを細分化します。",
+		"tags" : [ "UI", "inventory" ]
 	}
 ]
