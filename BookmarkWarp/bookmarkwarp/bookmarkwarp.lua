@@ -6,7 +6,9 @@ local settingsFileLoc = string.format("../addons/%s/settings.json", string.lower
 
 _G["ADDONS"] = _G["ADDONS"] or {};
 _G["ADDONS"][addonName] = _G["ADDONS"][addonName] or {};
-local BookmarkWarp = _G["ADDONS"][addonName];
+--SetEventScript内関数からの呼び出しもPUBLICでなくてはいけない
+--BookmarkWarp変数からlocalを削除
+BookmarkWarp = _G["ADDONS"][addonName];
 BookmarkWarp.settings = {};
 BookmarkWarp.settings.position = { x = 1760, y = 490 };
 BookmarkWarp.settings.bookmarkList = {};
@@ -41,12 +43,12 @@ function BookmarkWarp.InitFrame()
   --frame:Resize(200, 200);
   --frame:SetLayerLevel(201);
 
-  frame:SetEventScript(ui.LBUTTONUP, "ADDONS.BookmarkWarp.EndDrag()");
+  frame:SetEventScript(ui.LBUTTONUP, "BOOKMARKWARP_ENDDRAG");
   frame:ShowWindow(0);
 end
 
 -- end drag.
-function BookmarkWarp.EndDrag()
+function BOOKMARKWARP_ENDDRAG
   local frame = ui.GetFrame('bookmarkwarp');
   BookmarkWarp.settings.position.x = frame:GetX();
   BookmarkWarp.settings.position.y = frame:GetY();
@@ -71,7 +73,9 @@ function BookmarkWarp.CreateButton(i, warpName, warpcost)
     button:SetClickSound('button_click_stats');
     button:SetEventScript(ui.LBUTTONUP, 'WARP_TO_AREA')
     button:SetEventScriptArgString(ui.LBUTTONUP, warpName);
-    button:SetEventScript(ui.RBUTTONUP, string.format('ADDONS.BookmarkWarp.ContextMenu("%s", %d, "remove")', warpName, warpcost));
+    button:SetEventScript(ui.RBUTTONUP, 'BOOKMARKWARP_CONTEXTMENUREMOVE');
+    button:SetEventScriptArgString(ui.RBUTTONUP, warpName);
+    button:SetEventScriptArgNumber(ui.RBUTTONUP, warpcost);
   else
     button:SetEnable(0);
     button:SetText(mapCls.Name);
@@ -109,16 +113,32 @@ function BookmarkWarp.OnInitWarpSub(frame, pic, index, gBoxName, nowZoneName, wa
   local set = GET_CHILD(gbox, setName, "ui::CControlSet");
   if set == nil then return end
 
-  set:SetEventScript(ui.RBUTTONUP, string.format('ADDONS.BookmarkWarp.ContextMenu("%s", %d, "add")', info.ClassName, warpcost));
+  --SetEventScriptで呼び出されるものはPUBLICでなくてはいけない
+  --SetEventScriptの引数は、ArgStringとArgNumberで指定する
+  set:SetEventScript(ui.RBUTTONUP, 'BOOKMARKWARP_CONTEXTMENUADD');
+  set:SetEventScriptArgString(ui.RBUTTONUP, info.ClassName);
+  set:SetEventScriptArgNumber(ui.RBUTTONUP, warpcost);
 end
 
 -- context menu
+function BOOKMARKWARP_CONTEXTMENUREMOVE(frame, ctrl, warpName, warpcost)
+  --SetEventScript内関数からの呼び出しもPUBLICでなくてはいけない
+  --BookmarkWarp変数からlocalを削除
+  BookmarkWarp.ContextMenu(warpName, warpcost, "remove")
+end
+
+function BOOKMARKWARP_CONTEXTMENUADD(frame, ctrl, warpName, warpcost)
+  --SetEventScript内関数からの呼び出しもPUBLICでなくてはいけない
+  --BookmarkWarp変数からlocalを削除
+  BookmarkWarp.ContextMenu(warpName, warpcost, "add")
+end
+
 function BookmarkWarp.ContextMenu(warpName, warpcost, type)
   local context = ui.CreateContextMenu("BOOKMARK_CONTEXT", nil, 0, 0, 150, 100);
   if type == "add" then
-    ui.AddContextMenuItem(context, "Add Bookmark", string.format('ADDONS.BookmarkWarp.AddBookmark("%s", %d)', warpName, warpcost));
+    ui.AddContextMenuItem(context, "Add Bookmark", string.format('BookmarkWarp.AddBookmark("%s", %d)', warpName, warpcost));
   else
-    ui.AddContextMenuItem(context, "Remove Bookmark", string.format('ADDONS.BookmarkWarp.RemoveBookmark("%s")', warpName));
+    ui.AddContextMenuItem(context, "Remove Bookmark", string.format('BookmarkWarp.RemoveBookmark("%s")', warpName));
   end
   context:Resize(context:GetWidth(), context:GetHeight());
   ui.OpenContextMenu(context);
