@@ -39,28 +39,40 @@ function ExInventory.Init()
 
   for i=1, #tabList do
     local button = tab:CreateOrGetControl('button',"exbutton_"..tabList[i] ,92*(i-1), 40, 92, 45);
+    tolua.cast(button, "ui::CButton")
     button:SetText("{@st66b14}"..ScpArgMsg(buttonName[i]));
-    button:SetEventScript(ui.LBUTTONUP, string.format('ADDONS.ExtendedInventory.TabButton("%s")', tabList[i]));
+    --SetEventScriptで呼び出されるものはPUBLICでなくてはいけない
+    --SetEventScriptの引数は、ArgStringとArgNumberで指定する
+    button:SetEventScript(ui.LBUTTONUP, 'EXTENDEDINVENTORY_TABBUTTON');
+    button:SetEventScriptArgString(ui.LBUTTONUP, tabList[i]);
     button:SetSkinName('base_btn'); -- test_pvp_btn test_normal_button
     button:SetOverSound('button_cursor_over_2');
     button:SetClickSound('inven_arrange');
   end
   button = tab:CreateOrGetControl('button',"exbutton_Equip" ,-2, -2, 154, 43);
+  tolua.cast(button, "ui::CButton")
   button:SetText("{@st66b}"..ScpArgMsg("TP_EquipItem"));
-  button:SetEventScript(ui.LBUTTONUP, 'ADDONS.ExtendedInventory.TabItem(0)');
+  --SetEventScriptで呼び出されるものはPUBLICでなくてはいけない
+  --SetEventScriptの引数は、ArgStringとArgNumberで指定する
+  button:SetEventScript(ui.LBUTTONUP, 'EXTENDEDINVENTORY_TABITEM');
+  button:SetEventScriptArgNumber(ui.LBUTTONUP, 0);
   button:SetSkinName('base_btn');
   button:SetOverSound('button_cursor_over_2');
   button:SetClickSound('inven_arrange');
 
   button = tab:CreateOrGetControl('button',"exbutton_Item" ,148, -2, 154, 43);
+  tolua.cast(button, "ui::CButton")
   button:SetText("{@st66b}"..ScpArgMsg("Item"));
-  button:SetEventScript(ui.LBUTTONUP, 'ADDONS.ExtendedInventory.TabItem(1)');
+  --SetEventScriptで呼び出されるものはPUBLICでなくてはいけない
+  --SetEventScriptの引数は、ArgStringとArgNumberで指定する
+  button:SetEventScript(ui.LBUTTONUP, 'EXTENDEDINVENTORY_TABITEM');
+  button:SetEventScriptArgNumber(ui.LBUTTONUP, 1);
   button:SetSkinName('base_btn');
   button:SetOverSound('button_cursor_over_2');
   button:SetClickSound('inven_arrange');
 end
 
-function ExInventory.TabItem(index)
+function EXTENDEDINVENTORY_TABITEM(frame, ctrl, argStr, index)
   local frame = ui.GetFrame('inventory');
   local group = GET_CHILD(frame, 'inventoryGbox', 'ui::CGroupBox');
   local tab = GET_CHILD(group, 'inventype_Tab', 'ui::CTabControl');
@@ -68,7 +80,7 @@ function ExInventory.TabItem(index)
   INVENTORY_TOTAL_LIST_GET(frame);
 end
 
-function ExInventory.TabButton(tabName)
+function EXTENDEDINVENTORY_TABBUTTON(frame, ctrl, tabName, argNum)
   local frame = ui.GetFrame('inventory');
   local group = GET_CHILD(frame, 'inventoryGbox', 'ui::CGroupBox');
   local tab = GET_CHILD(group, 'inventype_Tab', 'ui::CTabControl');
