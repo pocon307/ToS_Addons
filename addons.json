@@ -3,10 +3,10 @@
 		"name" : "Bookmark Warp",
 		"file" : "bookmarkwarp",
 		"extension" : "ipf",
-		"fileVersion" : "v1.0.0",
+		"fileVersion" : "v1.0.1",
 		"releaseTag" : "bookmarkwarp",
 		"unicode" : "⛄",
-		"description" : "ワープ箇所のブックマークができる",
+		"description" : "ワープ箇所のブックマークができる。【v1.0.1：不具合修正、とらハム氏が直してくれました！感謝】",
 		"tags" : [ "warp" ]
 	},
 	{
@@ -23,10 +23,10 @@
 		"name" : "Extended Inventory",
 		"file" : "extendedinventory",
 		"extension" : "ipf",
-		"fileVersion" : "v1.0.0",
+		"fileVersion" : "v1.0.1",
 		"releaseTag" : "extendedinventory",
 		"unicode" : "⛄",
-		"description" : "インベントリのタブを細分化します。",
+		"description" : "インベントリのタブを細分化します。【v1.0.1：不具合修正、とらハム氏が直してくれました！感謝】",
 		"tags" : [ "UI", "inventory" ]
 	}
 ]
